@@ -29,9 +29,14 @@ BorderlessRoundedWindowBase::BorderlessRoundedWindowBase(wxWindow* parent,
     // Initial shape.
     UpdateShape();
 
-    // We still bind mouse events dynamically using AttachDragHandlers() on
-    // a child (e.g. a background panel). The frame itself usually does not
-    // receive left-down events when it has child controls.
+    // Default: allow dragging by clicking on the frame's client area.
+    // This gives basic drag-to-move behaviour even if the caller does not
+    // explicitly call AttachDragHandlers() on a child window.
+    AttachDragHandlers(this);
+
+    // Callers can still attach drag handlers to specific children (e.g. a
+    // background panel) via AttachDragHandlers(child) if they want to limit
+    // the draggable region.
 }
 
 void BorderlessRoundedWindowBase::SetCornerRadiusDIP(int radiusDIP)
