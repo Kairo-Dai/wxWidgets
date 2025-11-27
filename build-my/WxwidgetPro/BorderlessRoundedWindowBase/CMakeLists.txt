@@ -54,7 +54,7 @@ target_link_libraries(BorderlessRoundedWindowBase
 # ---------------------------------------------------------------------------
 # Example executable using the base class
 # ---------------------------------------------------------------------------
-add_executable(BorderlessRoundedWindowExample
+add_executable(BorderlessRoundedWindowExample WIN32
     ExampleBorderlessRoundedWindow.cpp
 )
 
@@ -62,4 +62,5 @@ add_executable(BorderlessRoundedWindowExample
 target_link_libraries(BorderlessRoundedWindowExample
     PRIVATE
         BorderlessRoundedWindowBase
+        wxWidgets::wxWidgets
 )
