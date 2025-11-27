@@ -12,6 +12,7 @@ rem This expects wxWidgets to have been built and installed into
 rem "%SCRIPT_DIR%..\install_win32" (see build-my\build.bat).
 cmake -G "Visual Studio 17 2022" -A Win32 ^
   -DwxWidgets_ROOT="%REPO_DIR%\build-my\install_win32" ^
+  -DCMAKE_INSTALL_PREFIX="%REPO_DIR%\build-my\WxwidgetPro\install_win32" ^
   --fresh -B "%PROJECT_DIR%\build_win32" -S "%PROJECT_DIR%"
 
 endlocal

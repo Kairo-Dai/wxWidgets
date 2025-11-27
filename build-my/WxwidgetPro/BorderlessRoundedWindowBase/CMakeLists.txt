@@ -6,6 +6,8 @@
 # install prefix was: build-my\install_win32.
 ################################################################################
 
+include(GNUInstallDirs) # standard install dir variables (bin, lib, include, ...)
+
 # Root of the local wxWidgets install used by this demo.
 set(wxWidgets_ROOT
     "${CMAKE_CURRENT_LIST_DIR}/../../install_win32"
@@ -64,3 +66,47 @@ target_link_libraries(BorderlessRoundedWindowExample
         BorderlessRoundedWindowBase
         wxWidgets::wxWidgets
 )
+
+# ---------------------------------------------------------------------------
+# Install rules
+# ---------------------------------------------------------------------------
+
+# Install the library and its public header for reuse.
+install(TARGETS BorderlessRoundedWindowBase
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+)
+
+install(FILES
+    "${CMAKE_CURRENT_LIST_DIR}/BorderlessRoundedWindowBase.h"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+
+# Install the example executable.
+install(TARGETS BorderlessRoundedWindowExample
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+)
+
+# Also copy the wxWidgets runtime DLLs this example depends on so that the
+# installed exe can run without modifying PATH. We query the imported wxWidgets
+# target to stay independent from the exact DLL name/version.
+if(TARGET wx::wxmono)
+    # Debug configuration DLL (matches your build-my/install_win32 contents).
+    get_target_property(_wxmono_debug_dll wx::wxmono IMPORTED_LOCATION_DEBUG)
+    if(_wxmono_debug_dll)
+        install(FILES "${_wxmono_debug_dll}"
+            DESTINATION "${CMAKE_INSTALL_BINDIR}"
+            CONFIGURATIONS Debug
+        )
+    endif()
+
+    # Release (and related) configuration DLL, if present in your wx install.
+    get_target_property(_wxmono_release_dll wx::wxmono IMPORTED_LOCATION_RELEASE)
+    if(_wxmono_release_dll)
+        install(FILES "${_wxmono_release_dll}"
+            DESTINATION "${CMAKE_INSTALL_BINDIR}"
+            CONFIGURATIONS Release RelWithDebInfo MinSizeRel
+        )
+    endif()
+endif()
