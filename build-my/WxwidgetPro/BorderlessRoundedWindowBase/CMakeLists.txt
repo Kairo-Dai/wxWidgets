@@ -39,6 +39,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # ---------------------------------------------------------------------------
 add_library(BorderlessRoundedWindowBase
     BorderlessRoundedWindowBase.cpp
+    BorderlessRoundedWindowBase.h
 )
 
 # Public include dir so other targets can `#include "BorderlessRoundedWindowBase.h"`.
