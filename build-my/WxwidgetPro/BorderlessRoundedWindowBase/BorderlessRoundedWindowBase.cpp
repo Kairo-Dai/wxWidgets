@@ -96,7 +96,17 @@ void BorderlessRoundedWindowBase::OnLeftDown(wxMouseEvent& event)
 {
     CaptureMouse();
 
-    const wxPoint posScreen = ClientToScreen(event.GetPosition());
+    wxPoint posScreen;
+    if (auto* src = wxDynamicCast(event.GetEventObject(), wxWindow))
+    {
+        // Convert from the source window's client coords to screen.
+        posScreen = src->ClientToScreen(event.GetPosition());
+    }
+    else
+    {
+        posScreen = ClientToScreen(event.GetPosition());
+    }
+
     const wxPoint origin    = GetPosition();
 
     m_dragDelta = wxPoint(posScreen.x - origin.x, posScreen.y - origin.y);
@@ -107,7 +117,16 @@ void BorderlessRoundedWindowBase::OnMouseMove(wxMouseEvent& event)
 {
     if (m_dragging && event.LeftIsDown())
     {
-        const wxPoint posScreen = ClientToScreen(event.GetPosition());
+        wxPoint posScreen;
+        if (auto* src = wxDynamicCast(event.GetEventObject(), wxWindow))
+        {
+            posScreen = src->ClientToScreen(event.GetPosition());
+        }
+        else
+        {
+            posScreen = ClientToScreen(event.GetPosition());
+        }
+
         Move(wxPoint(posScreen.x - m_dragDelta.x,
                      posScreen.y - m_dragDelta.y));
     }
