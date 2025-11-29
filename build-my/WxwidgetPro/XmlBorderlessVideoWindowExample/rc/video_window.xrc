@@ -46,8 +46,8 @@
 
                         <!-- Middle: flexible spacer pushes buttons to the right -->
                         <object class="sizeritem">
-                            <object class="spacer">
-                                <size>1,1</size>
+                            <object class="wxPanel" name="title_spacer">
+                                <minsize>1,1</minsize>
                             </object>
                             <option>1</option>
                             <flag>wxEXPAND</flag>
@@ -89,4 +89,3 @@
     </object>
 
 </resource>
-
