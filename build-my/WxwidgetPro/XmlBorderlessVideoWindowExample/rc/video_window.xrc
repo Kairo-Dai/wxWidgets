@@ -30,7 +30,7 @@
             <!-- Custom title bar: visible only in windowed mode -->
             <object class="sizeritem">
                 <object class="wxPanel" name="title_bar_panel">
-                    <bg>#303030</bg>
+                    <bg>#FFFFFF</bg>
 
                     <object class="wxBoxSizer">
                         <orient>wxHORIZONTAL</orient>
@@ -39,8 +39,9 @@
                         <object class="sizeritem">
                             <object class="wxStaticText" name="title_text">
                                 <label>Borderless Video Window</label>
+                                <fg>#000000</fg>
                             </object>
-                            <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT</flag>
+                            <flag>wxALIGN_CENTER_VERTICAL|wxLEFT</flag>
                             <border>8</border>
                         </object>
 

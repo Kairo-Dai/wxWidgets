@@ -191,10 +191,17 @@ void VideoWindowFrame::InitializeFromXrc()
     m_videoPanel = XRCCTRL(*this, "video_render_panel", VideoRenderPanel);
     m_btnMinimize = XRCCTRL(*this, "btn_minimize", wxButton);
     m_btnToggleFullscreen = XRCCTRL(*this, "btn_toggle_fullscreen", wxButton);
+    auto* titleText = XRCCTRL(*this, "title_text", wxStaticText);
+    auto* titleSpacer = XRCCTRL(*this, "title_spacer", wxPanel);
 
-    // Dragging on the title bar moves the window.
+    // Dragging on the title bar (background, title text, or spacer) moves
+    // the window, but not when interacting with the buttons.
     if ( m_titleBarPanel )
         AttachDragHandlers(m_titleBarPanel);
+    if ( titleText )
+        AttachDragHandlers(titleText);
+    if ( titleSpacer )
+        AttachDragHandlers(titleSpacer);
 
     if ( m_btnMinimize )
     {
