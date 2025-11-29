@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
+
+    <!--
+        XRC description for a borderless video window layout.
+
+        Structure:
+          video_window_root (wxPanel)
+            |- title_bar_panel (wxPanel)
+            |     |- title_text (wxStaticText)
+            |     |- spacer      (spacer)
+            |     |- btn_minimize (wxButton)
+            |     |- btn_toggle_fullscreen (wxButton)
+            |
+            |- video_render_panel (VideoRenderPanel via subclass)
+
+        Mode 1 (fullscreen, top-most, borderless):
+          - C++ code hides title_bar_panel so only video_render_panel is visible.
+
+        Mode 2 (800x600 borderless window):
+          - C++ code shows title_bar_panel.
+    -->
+
+    <object class="wxPanel" name="video_window_root">
+        <bg>#202020</bg>
+
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+
+            <!-- Custom title bar: visible only in windowed mode -->
+            <object class="sizeritem">
+                <object class="wxPanel" name="title_bar_panel">
+                    <bg>#303030</bg>
+
+                    <object class="wxBoxSizer">
+                        <orient>wxHORIZONTAL</orient>
+
+                        <!-- Left: window title text -->
+                        <object class="sizeritem">
+                            <object class="wxStaticText" name="title_text">
+                                <label>Borderless Video Window</label>
+                            </object>
+                            <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT</flag>
+                            <border>8</border>
+                        </object>
+
+                        <!-- Middle: flexible spacer pushes buttons to the right -->
+                        <object class="sizeritem">
+                            <object class="spacer">
+                                <size>1,1</size>
+                            </object>
+                            <option>1</option>
+                            <flag>wxEXPAND</flag>
+                        </object>
+
+                        <!-- Right: minimize button -->
+                        <object class="sizeritem">
+                            <object class="wxButton" name="btn_minimize">
+                                <label>_</label>
+                                <style>wxBU_EXACTFIT</style>
+                            </object>
+                            <flag>wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM</flag>
+                            <border>4</border>
+                        </object>
+
+                        <!-- Right: toggle fullscreen (maximize/restore) button -->
+                        <object class="sizeritem">
+                            <object class="wxButton" name="btn_toggle_fullscreen">
+                                <label>[]</label>
+                                <style>wxBU_EXACTFIT</style>
+                            </object>
+                            <flag>wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM</flag>
+                            <border>8</border>
+                        </object>
+                    </object>
+                </object>
+                <flag>wxEXPAND</flag>
+            </object>
+
+            <!-- Main video rendering area -->
+            <object class="sizeritem">
+                <object class="wxPanel" name="video_render_panel" subclass="VideoRenderPanel">
+                    <bg>#000000</bg>
+                </object>
+                <option>1</option>
+                <flag>wxEXPAND</flag>
+            </object>
+        </object>
+    </object>
+
+</resource>
+
